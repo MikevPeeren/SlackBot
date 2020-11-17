@@ -110,6 +110,6 @@ const environmentFreeMessage = async (command: any, say: any, isStaging: boolean
   await say(
     `${isStaging ? ':acc:' : ':feat:'} ${
       command.text.charAt(0).toUpperCase() + command.text.slice(1)
-    } is now free to use :green_circle:, thanks ${command.user_name}`,
+    } is now free to use :green_circle:, thanks <@${command.user_name}>`,
   );
 };
