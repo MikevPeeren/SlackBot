@@ -12,9 +12,6 @@ const quoteArray = [
 ];
 
 export const getRandomQuote = async ({ command, ack, say }: any) => {
-  // Acknowledge command request
-  await ack();
-
   const randomNumber = Math.floor(Math.random() * quoteArray.length);
 
   await say(`${quoteArray[randomNumber]}`);

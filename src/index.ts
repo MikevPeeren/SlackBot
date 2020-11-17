@@ -4,9 +4,8 @@ require('dotenv').config();
 import { App } from '@slack/bolt';
 
 // Functions
-import { useEnvironment, freeEnvironment } from './commands/environments';
+import { useEnvironment, freeEnvironment, getEnvironmentStatus } from './commands/environments';
 import { getRandomQuote } from './messages/quotes';
-import { getEnvironmentStatus } from './messages/environments';
 
 const bot = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -14,18 +13,18 @@ const bot = new App({
 });
 
 // The echo command simply echoes on command
-bot.command('/use', useEnvironment);
-bot.command('/free', freeEnvironment);
+bot.command('/environments_use', useEnvironment);
+bot.command('/environments_free', freeEnvironment);
+bot.message('/environments_check', getEnvironmentStatus);
 
 bot.message('dukequote', getRandomQuote);
-bot.message('environments', getEnvironmentStatus);
 
 bot.event('app_mention', async ({ context, event }) => {
   try {
     await bot.client.chat.postMessage({
       token: context.botToken,
       channel: event.channel,
-      text: `Hey yoo <@${event.user}> you mentioned me`,
+      text: `Hello <@${event.user}>, I am still alive`,
     });
   } catch (e) {
     console.log(`error responding ${e}`);
