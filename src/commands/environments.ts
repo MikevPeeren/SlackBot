@@ -15,22 +15,22 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
   const featureOneLowerCase = FEATURE_ONE.toLocaleLowerCase();
   const featureTwoLowerCase = FEATURE_TWO.toLocaleLowerCase();
 
-  switch (command.text.toLowerCase()) {
+  switch (command.text) {
     case stagingLowerCase:
     case STAGING:
-      if (!stagingInUseBy) {
+      if (stagingInUseBy == null) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, true);
       } else await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
     case featureOneLowerCase:
     case FEATURE_ONE:
-      if (!featureOneInUseBy) {
+      if (featureOneInUseBy == null) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
       } else await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
     case featureTwoLowerCase:
     case FEATURE_TWO:
-      if (!featureTwoInUseBy) {
+      if (featureTwoInUseBy == null) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
       } else await environmentAlreadyTakenMessage(command, say, false, featureTwoInUseBy);
