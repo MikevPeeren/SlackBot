@@ -9,15 +9,15 @@ export const changeEnvironmentStatus = (environment: string, inUseby: string | n
   switch (environment) {
     case 'staging':
       stagingInUse = !stagingInUse;
-      stagingInUseBy = inUseby ? inUseby : 'Nobody';
+      stagingInUseBy = inUseby ? inUseby.charAt(0).toUpperCase() + inUseby.slice(1) : 'Nobody';
       break;
     case 'feature1':
       featureOneInUse = !featureOneInUse;
-      featureOneInUseBy = inUseby ? inUseby : 'Nobody';
+      featureOneInUseBy = inUseby ? inUseby.charAt(0).toUpperCase() + inUseby.slice(1) : 'Nobody';
       break;
     case 'feature2':
       featureTwoInUse = !featureTwoInUse;
-      featureTwoInUseBy = inUseby ? inUseby : 'Nobody';
+      featureTwoInUseBy = inUseby ? inUseby.charAt(0).toUpperCase() + inUseby.slice(1) : 'Nobody';
       break;
     default:
       return;
