@@ -12,18 +12,11 @@ const bot = new App({
   token: process.env.SLACK_BOT_TOKEN,
 });
 
-(async () => {
-  // Start the app
-  await bot.start(process.env.PORT || 3000);
-
-  console.log('⚡️ Bolt app is running!');
-})();
-
 // The echo command simply echoes on command
 bot.command('/use', useEnvironment);
 bot.command('/free', freeEnvironment);
 
-bot.message('environment', getEnvironmentStatus);
+bot.message('environments', getEnvironmentStatus);
 
 bot.event('app_mention', async ({ context, event }) => {
   try {
@@ -36,3 +29,10 @@ bot.event('app_mention', async ({ context, event }) => {
     console.log(`error responding ${e}`);
   }
 });
+
+(async () => {
+  // Start the app
+  await bot.start(process.env.PORT || 3000);
+
+  console.log('⚡️ Bolt app is running!');
+})();
