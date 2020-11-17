@@ -5,7 +5,7 @@ import { App } from '@slack/bolt';
 
 // Functions
 import { useEnvironment, freeEnvironment } from './commands/environments';
-import { getRandomQuote } from './commands/quotes';
+import { getRandomQuote } from './messages/quotes';
 import { getEnvironmentStatus } from './messages/environments';
 
 const bot = new App({
@@ -16,8 +16,8 @@ const bot = new App({
 // The echo command simply echoes on command
 bot.command('/use', useEnvironment);
 bot.command('/free', freeEnvironment);
-bot.command('/quote', getRandomQuote);
 
+bot.message('dukequote', getRandomQuote);
 bot.message('environments', getEnvironmentStatus);
 
 bot.event('app_mention', async ({ context, event }) => {

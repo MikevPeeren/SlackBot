@@ -10,8 +10,8 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
     case 'feature2':
       changeEnvironmentStatus(command.text, command.user_name);
       await say(
-        `${command.text.charAt(0).toUpperCase() + command.text.slice(1)} has now been taken in use  by ${
-          command.user_name.charAt(0).toUpperCase() + command.user_name.slice(1)
+        `${command.text.charAt(0).toUpperCase() + command.text.slice(1)} has now been taken in use by ${
+          command.user_name.charAt(0).toUpperCase().replace(/\./g, ' ') + command.user_name.slice(1).replace(/\./g, ' ')
         } ⚙`,
       );
       break;
