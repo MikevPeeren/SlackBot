@@ -24,6 +24,7 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
       } else {
         await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
       }
+      break;
     case featureOneLowerCase:
       if (!featureOneInUseBy) {
         await changeEnvironmentStatus(command.text, command.user_name);
@@ -31,6 +32,7 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
       } else {
         await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
       }
+      break;
     case featureTwoLowerCase:
       if (!featureTwoInUseBy) {
         await changeEnvironmentStatus(command.text, command.user_name);
