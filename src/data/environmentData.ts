@@ -1,9 +1,9 @@
 export let stagingInUse: boolean = false;
-export let stagingInUseBy: string | null = null;
+export let stagingInUseBy: string | null = '';
 export let featureOneInUse: boolean = false;
-export let featureOneInUseBy: string | null = null;
+export let featureOneInUseBy: string | null = '';
 export let featureTwoInUse: boolean = false;
-export let featureTwoInUseBy: string | null = null;
+export let featureTwoInUseBy: string | null = '';
 
 export const changeEnvironmentStatus = async (environment: string, inUseby: string | null) => {
   switch (environment) {
@@ -20,6 +20,6 @@ export const changeEnvironmentStatus = async (environment: string, inUseby: stri
       featureTwoInUseBy = inUseby ? inUseby.charAt(0).toUpperCase() + inUseby.slice(1) : null;
       break;
     default:
-      return;
+      break;
   }
 };

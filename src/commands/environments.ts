@@ -18,22 +18,28 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
   switch (command.text) {
     case stagingLowerCase:
     case STAGING:
-      if (stagingInUseBy == null) {
+      if (!!stagingInUseBy) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, true);
-      } else await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
+      } else {
+        await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
+      }
     case featureOneLowerCase:
     case FEATURE_ONE:
-      if (featureOneInUseBy == null) {
+      if (!!featureOneInUseBy) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
-      } else await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
+      } else {
+        await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
+      }
     case featureTwoLowerCase:
     case FEATURE_TWO:
-      if (featureTwoInUseBy == null) {
+      if (!!featureTwoInUseBy) {
         await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
-      } else await environmentAlreadyTakenMessage(command, say, false, featureTwoInUseBy);
+      } else {
+        await environmentAlreadyTakenMessage(command, say, false, featureTwoInUseBy);
+      }
       break;
     default:
       await say(`${command.text.charAt(0).toUpperCase() + command.text.slice(1)} is not an environment ⛔`);
