@@ -5,7 +5,7 @@ export let featureOneInUseBy: string | null = null;
 export let featureTwoInUse: boolean = false;
 export let featureTwoInUseBy: string | null = null;
 
-export const changeEnvironmentStatus = (environment: string, inUseby: string | null) => {
+export const changeEnvironmentStatus = async (environment: string, inUseby: string | null) => {
   switch (environment) {
     case 'staging':
       stagingInUse = !stagingInUse;

@@ -11,28 +11,25 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
   // Acknowledge command request
   await ack();
 
-  console.log(command.text.toLowerCase());
-  console.log(STAGING.toLowerCase());
   switch (command.text.toLowerCase()) {
     case STAGING.toLowerCase():
       if (!stagingInUseBy) {
-        changeEnvironmentStatus(command.text, command.user_name);
+        await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, true);
       } else await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
     case FEATURE_ONE.toLowerCase():
       if (!featureOneInUseBy) {
-        changeEnvironmentStatus(command.text, command.user_name);
+        await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
       } else await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
     case FEATURE_TWO.toLowerCase():
       if (!featureTwoInUseBy) {
-        changeEnvironmentStatus(command.text, command.user_name);
+        await changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
       } else await environmentAlreadyTakenMessage(command, say, false, featureTwoInUseBy);
       break;
     default:
       await say(`${command.text.charAt(0).toUpperCase() + command.text.slice(1)} is not an environment ⛔`);
-      return;
   }
 };
 
@@ -53,7 +50,6 @@ export const freeEnvironment = async ({ command, ack, say }: any) => {
       break;
     default:
       await say(`${command.text.charAt(0).toUpperCase() + command.text.slice(1)} is not an environment ⛔`);
-      return;
   }
 };
 
@@ -63,16 +59,16 @@ export const getEnvironmentStatus = async ({ command, ack, say }: any) => {
   await ack();
 
   await say(`
-    :acc: ${stagingInUseBy ? ':red_circle:' : ':green_cicle:'} Staging is ${
+    :acc: ${stagingInUseBy ? ':red_circle:' : ':green_circle:'} Staging is ${
     stagingInUseBy ? 'taken by ' + `${stagingInUseBy}` : 'free to use'
   }`);
   await say(
-    `:feat: ${featureOneInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 1 is ${
+    `:feat: ${featureOneInUseBy ? ':red_circle:' : ':green_circle:'} Feature 1 is ${
       featureOneInUseBy ? 'taken by ' + `${featureOneInUseBy}` : 'free to use'
     }.`,
   );
   await say(`
-    :feat: ${featureTwoInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 2 is ${
+    :feat: ${featureTwoInUseBy ? ':red_circle:' : ':green_circle:'} Feature 2 is ${
     featureTwoInUseBy ? 'taken by ' + `${featureTwoInUseBy}` : 'free to use'
   }.`);
 };
