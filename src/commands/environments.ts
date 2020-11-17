@@ -82,7 +82,12 @@ const takeEnvironmentInUse = async (command: any, say: any, isStaging: boolean) 
   );
 };
 
-const environmentAlreadyTakenMessage = async (commandText: string, say: any, isStaging: boolean, inUseBy: string) => {
+const environmentAlreadyTakenMessage = async (
+  commandText: string,
+  say: any,
+  isStaging: boolean,
+  inUseBy: string | null,
+) => {
   await say(
     `Sorry , but ${
       isStaging ? ':acc:' : ':feat:'
