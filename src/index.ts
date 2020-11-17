@@ -1,9 +1,11 @@
 require('dotenv').config();
 
-const { App } = require('@slack/bolt');
+// Requiring the Bolt
+import { App } from '@slack/bolt';
 
 // Functions
-import { useEnvironment } from './commands/environments';
+import { useEnvironment, freeEnvironment } from './commands/environments';
+import { getEnvironmentStatus } from './messages/environments';
 
 const bot = new App({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -18,15 +20,10 @@ const bot = new App({
 })();
 
 // The echo command simply echoes on command
-bot.command('/environments', async ({ command, ack, say }) => {
-  // Acknowledge command request
-  await ack();
-
-  await say(`${stagingInUse ? 'Staging is in use ' : 'Staging is not in use'}`);
-});
-
-// The echo command simply echoes on command
 bot.command('/use', useEnvironment);
+bot.command('/free', freeEnvironment);
+
+bot.message('environment', getEnvironmentStatus);
 
 bot.event('app_mention', async ({ context, event }) => {
   try {
