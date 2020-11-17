@@ -15,7 +15,7 @@ const bot = new App({
 // The echo command simply echoes on command
 bot.command('/environments_use', useEnvironment);
 bot.command('/environments_free', freeEnvironment);
-bot.message('/environments_check', getEnvironmentStatus);
+bot.command('/environments_check', getEnvironmentStatus);
 
 bot.message('dukequote', getRandomQuote);
 

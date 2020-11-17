@@ -4,12 +4,15 @@ import { changeEnvironmentStatus } from '../data/environmentData';
 // Enviroment Data
 import { stagingInUseBy, featureOneInUseBy, featureTwoInUseBy } from '../data/environmentData';
 
+// Constants
 import { STAGING, FEATURE_ONE, FEATURE_TWO } from '../constants/general';
 
 export const useEnvironment = async ({ command, ack, say }: any) => {
   // Acknowledge command request
   await ack();
 
+  console.log(command.text.toLowerCase());
+  console.log(STAGING.toLowerCase());
   switch (command.text.toLowerCase()) {
     case STAGING.toLowerCase():
       if (!stagingInUseBy) {
