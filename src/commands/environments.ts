@@ -54,9 +54,11 @@ export const freeEnvironment = async ({ command, ack, say }: any) => {
     case 'staging':
       environmentFreeMessage(command, say, true);
       changeEnvironmentStatus(command.text, null);
+      break;
     case 'feature1':
       environmentFreeMessage(command, say, false);
       changeEnvironmentStatus(command.text, null);
+      break;
     case 'feature2':
       environmentFreeMessage(command, say, false);
       changeEnvironmentStatus(command.text, null);
