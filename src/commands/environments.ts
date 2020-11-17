@@ -12,20 +12,20 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
 
   switch (command.text.toLowerCase()) {
     case STAGING.toLowerCase():
-      if (stagingInUseBy) {
+      if (!stagingInUseBy) {
         changeEnvironmentStatus(command.text, command.user_name);
         takeEnvironmentInUse(command, say, true);
-      } else await environmentAlreadyTakenMessage(command.text, say, true, stagingInUseBy);
+      } else await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
     case FEATURE_ONE.toLowerCase():
-      if (featureOneInUseBy) {
+      if (!featureOneInUseBy) {
         changeEnvironmentStatus(command.text, command.user_name);
         takeEnvironmentInUse(command, say, false);
-      } else await environmentAlreadyTakenMessage(command.text, say, false, featureOneInUseBy);
+      } else await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
     case FEATURE_TWO.toLowerCase():
-      if (featureTwoInUseBy) {
+      if (!featureTwoInUseBy) {
         changeEnvironmentStatus(command.text, command.user_name);
         await takeEnvironmentInUse(command, say, false);
-      } else await environmentAlreadyTakenMessage(command.text, say, false, featureTwoInUseBy);
+      } else await environmentAlreadyTakenMessage(command, say, false, featureTwoInUseBy);
       break;
     default:
       await say(`${command.text.charAt(0).toUpperCase() + command.text.slice(1)} is not an environment ⛔`);
@@ -60,13 +60,13 @@ export const getEnvironmentStatus = async ({ command, ack, say }: any) => {
   await ack();
 
   await say(`
-    :acc: ${stagingInUseBy ? ' :red_circle:' : ':green_cicle:'} Staging is ${
+    :acc: ${stagingInUseBy ? ':red_circle:' : ':green_cicle:'} Staging is ${
     stagingInUseBy ? 'taken by ' + `${stagingInUseBy}` : 'free to use'
   }\ 
-    :feat: ${featureOneInUseBy ? ' :red_circle:' : ':green_cicle:'} Feature 1 is ${
+    :feat: ${featureOneInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 1 is ${
     featureOneInUseBy ? 'taken by ' + `${featureOneInUseBy}` : 'free to use'
   }.\ 
-    :feat: ${featureTwoInUseBy ? ' :red_circle:' : ':green_cicle:'} Feature 2 is ${
+    :feat: ${featureTwoInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 2 is ${
     featureTwoInUseBy ? 'taken by ' + `${featureTwoInUseBy}` : 'free to use'
   }\ 
   `);
@@ -82,16 +82,11 @@ const takeEnvironmentInUse = async (command: any, say: any, isStaging: boolean) 
   );
 };
 
-const environmentAlreadyTakenMessage = async (
-  commandText: string,
-  say: any,
-  isStaging: boolean,
-  inUseBy: string | null,
-) => {
+const environmentAlreadyTakenMessage = async (command: any, say: any, isStaging: boolean, inUseBy: string | null) => {
   await say(
-    `Sorry , but ${
-      isStaging ? ':acc:' : ':feat:'
-    } ${commandText} is already taken by ${inUseBy} :red_circle:. Use /free first.`,
+    `Sorry ${command.user_name}, but ${isStaging ? ':acc:' : ':feat:'} ${
+      command.text
+    } is already taken by ${inUseBy} :red_circle:. Use /free first.`,
   );
 };
 
