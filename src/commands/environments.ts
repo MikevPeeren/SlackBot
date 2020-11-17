@@ -14,12 +14,12 @@ export const useEnvironment = async ({ command, ack, say }: any) => {
     case STAGING.toLowerCase():
       if (!stagingInUseBy) {
         changeEnvironmentStatus(command.text, command.user_name);
-        takeEnvironmentInUse(command, say, true);
+        await takeEnvironmentInUse(command, say, true);
       } else await environmentAlreadyTakenMessage(command, say, true, stagingInUseBy);
     case FEATURE_ONE.toLowerCase():
       if (!featureOneInUseBy) {
         changeEnvironmentStatus(command.text, command.user_name);
-        takeEnvironmentInUse(command, say, false);
+        await takeEnvironmentInUse(command, say, false);
       } else await environmentAlreadyTakenMessage(command, say, false, featureOneInUseBy);
     case FEATURE_TWO.toLowerCase():
       if (!featureTwoInUseBy) {
@@ -62,14 +62,16 @@ export const getEnvironmentStatus = async ({ command, ack, say }: any) => {
   await say(`
     :acc: ${stagingInUseBy ? ':red_circle:' : ':green_cicle:'} Staging is ${
     stagingInUseBy ? 'taken by ' + `${stagingInUseBy}` : 'free to use'
-  }\ 
-    :feat: ${featureOneInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 1 is ${
-    featureOneInUseBy ? 'taken by ' + `${featureOneInUseBy}` : 'free to use'
-  }.\ 
+  }`);
+  await say(
+    `:feat: ${featureOneInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 1 is ${
+      featureOneInUseBy ? 'taken by ' + `${featureOneInUseBy}` : 'free to use'
+    }.`,
+  );
+  await say(`
     :feat: ${featureTwoInUseBy ? ':red_circle:' : ':green_cicle:'} Feature 2 is ${
     featureTwoInUseBy ? 'taken by ' + `${featureTwoInUseBy}` : 'free to use'
-  }\ 
-  `);
+  }.`);
 };
 
 const takeEnvironmentInUse = async (command: any, say: any, isStaging: boolean) => {
@@ -84,7 +86,7 @@ const takeEnvironmentInUse = async (command: any, say: any, isStaging: boolean) 
 
 const environmentAlreadyTakenMessage = async (command: any, say: any, isStaging: boolean, inUseBy: string | null) => {
   await say(
-    `Sorry ${command.user_name}, but ${isStaging ? ':acc:' : ':feat:'} ${
+    `Sorry <@${command.user_name}>, but ${isStaging ? ':acc:' : ':feat:'} ${
       command.text
     } is already taken by ${inUseBy} :red_circle:. Use /free first.`,
   );
